@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-root', //app-component+ka+naam
+  templateUrl: './app.component.html', //html file
+  styleUrls: ['./app.component.css'], //css url
 })
 export class AppComponent {
-  title = 'angular-todo';
+  
 }
