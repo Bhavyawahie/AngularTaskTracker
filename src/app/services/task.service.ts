@@ -20,6 +20,10 @@ export class TaskServiceService {
 		return this.restTemplate.get<Task[]>(this.endpoint);
 	}
 
+	addTask(task: Task): Observable<Task> {
+		return this.restTemplate.post<Task>(this.endpoint, task, httpOptions);
+	}
+
 	deleteTask(task: Task): Observable<Task> {
 		const url = `${this.endpoint}/${task.id}`;
 		return this.restTemplate.delete<Task>(url);
