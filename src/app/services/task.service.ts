@@ -9,32 +9,32 @@ const httpOptions = {
 		"Content-Type": "application/json",
 	}),
 };
+
 @Injectable({
 	providedIn: "root",
 })
-export class TaskServiceService {
+export class TaskService {
 	private endpoint: string = "http://localhost:5000/tasks";
-	constructor(private restTemplate: HttpClient) {}
+	constructor(private axios: HttpClient) {}
 
 	getTasks(): Observable<Task[]> {
-		return this.restTemplate.get<Task[]>(this.endpoint);
+		return this.axios.get<Task[]>(this.endpoint);
 	}
 
 	addTask(task: Task): Observable<Task> {
-		return this.restTemplate.post<Task>(this.endpoint, task, httpOptions);
+		return this.axios.post<Task>(this.endpoint, task, httpOptions);
 	}
 
 	deleteTask(task: Task): Observable<Task> {
 		const url = `${this.endpoint}/${task.id}`;
-		return this.restTemplate.delete<Task>(url);
+		return this.axios.delete<Task>(url);
 	}
 
 	patchTaskReminder(task: Task): Observable<Task> {
 		const url = `${this.endpoint}/${task.id}`;
-		return this.restTemplate.patch<Task>(
-			url,
-			{ reminder: !task.reminder },
-			httpOptions,
-		);
+		const patch = { 
+			reminder: !task.reminder 
+		}
+		return this.axios.patch<Task>(url, patch, httpOptions);
 	}
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Task } from "../../Task";
-import { TaskServiceService } from "src/app/services/task.service";
+import { TaskService } from "../../services/task.service";
 
 @Component({
 	selector: "app-tasks",
@@ -9,17 +9,16 @@ import { TaskServiceService } from "src/app/services/task.service";
 })
 export class TasksComponent implements OnInit {
 	tasks: Task[] = [];
-	constructor(public taskService: TaskServiceService) {}
+	constructor(public taskService: TaskService) {}
 
 	ngOnInit(): void {
-		this.taskService.getTasks().subscribe((tasks) => {
-			this.tasks = tasks;
-		});
+		this.taskService.getTasks().subscribe((tasks) => (this.tasks = tasks));
 	}
+
 	addTask(task: Task): void {
-		this.taskService.addTask(task).subscribe((task) => {
-			this.tasks.push(task);
-		});
+		this.taskService
+			.addTask(task)
+			.subscribe((task) => this.tasks.push(task));
 	}
 
 	deleteTask(task: Task): void {
@@ -27,6 +26,7 @@ export class TasksComponent implements OnInit {
 			this.tasks = this.tasks.filter((t) => t.id !== task.id);
 		});
 	}
+
 	toggleTaskReminder(task: Task): void {
 		this.taskService
 			.patchTaskReminder(task)
